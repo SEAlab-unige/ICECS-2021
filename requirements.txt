@@ -1,0 +1,4 @@
+tensorflow~=2.5.0
+opencv-python~=4.5.4.58
+numpy~=1.19.5
+keras-segmentation~=0.3.0
