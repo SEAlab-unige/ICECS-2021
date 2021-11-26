@@ -110,8 +110,9 @@ def get_image_array(image_input,
     return img
 
 
-# Load video
-cap = cv2.VideoCapture(os.path.join(os.curdir, "video", "video.mp4"))
+# TODO: Insert here path to video
+path_to_video = "..."
+cap = cv2.VideoCapture(path_to_video)
 
 # Load object detector and build the detection function
 od_model = tf.saved_model.load(os.path.join(os.curdir, "object_detector", "saved_model"))
