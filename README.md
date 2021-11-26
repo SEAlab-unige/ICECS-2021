@@ -10,7 +10,7 @@ This repository contains a demo of the pipeline described in the paper **"An Aff
 * Edoardo Ragusa
 
 ## Table of contents
-* [Python project](#python-demo)
+* [Python demo](#python-demo)
 * [Reference](#reference)
 
 ## Python demo
