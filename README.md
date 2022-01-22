@@ -30,4 +30,14 @@ The object detector SavedModel format is in *object_detector* folder, while affo
 The object detector crops the objects present in the scene and the affordance detector segments the patches pixel-wise in three classes: Background (black), Grasp (blue) and No-grasp (green).
 
 ## Reference
-The reference to the paper will be available soon.
+If you find the code or pre-trained models useful, please cite the following paper:
+
+**An Affordance Detection Pipeline for Resource-Constrained Devices.** , T. Apicella, A. Cavallaro, R. Berta, P. Gastaldo, and E. Ragusa. IEEE International Conference on Electronics, Circuits, and Systems (ICECS), 2021. [Link](https://ieeexplore.ieee.org/abstract/document/9665447)
+
+    @inproceedings{apicella2021affordance,
+      title={An Affordance Detection Pipeline for Resource-Constrained Devices},
+      author={Apicella, Tommaso and Cavallaro, Andrea and Berta, Riccardo and Gastaldo, Paolo and Bellotti, Francesco and Ragusa, Edoardo},
+      booktitle={2021 28th IEEE International Conference on Electronics, Circuits, and Systems (ICECS)},
+      pages={1--6},
+      organization={IEEE}
+    }
