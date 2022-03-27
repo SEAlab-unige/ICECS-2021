@@ -32,7 +32,7 @@ The object detector crops the objects present in the scene and the affordance de
 ## Reference
 If you find the code or pre-trained models useful, please cite the following paper:
 
-**An Affordance Detection Pipeline for Resource-Constrained Devices.** , T. Apicella, A. Cavallaro, R. Berta, P. Gastaldo, and E. Ragusa. IEEE International Conference on Electronics, Circuits, and Systems (ICECS), 2021. [DOI](10.1109/ICECS53924.2021.9665447)
+**An Affordance Detection Pipeline for Resource-Constrained Devices.** , T. Apicella, A. Cavallaro, R. Berta, P. Gastaldo, and E. Ragusa. IEEE International Conference on Electronics, Circuits, and Systems (ICECS), 2021. [DOI](https://doi.org/10.1109/ICECS53924.2021.9665447)
 
     @inproceedings{apicella2021affordance,
       title={An Affordance Detection Pipeline for Resource-Constrained Devices},
