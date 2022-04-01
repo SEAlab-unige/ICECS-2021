@@ -17,10 +17,11 @@ This repository contains a demo of the pipeline described in the paper **"An Aff
 ### Requirements
 The requirements to run the python code are the following:
 * Python 3.6
-* Tensorflow 2.5
+* Tensorflow 
+* Keras 
 * Numpy
 * OpenCV
-* Keras segmentation
+* Keras segmentation 
 
 For additional details, see *requirements.txt* file.
 
