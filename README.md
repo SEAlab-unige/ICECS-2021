@@ -6,7 +6,7 @@ the object detector crops the objects of interest present in the scene and the a
 Both object detector and affordance detector are lightweight models and have been trained on [IIT-AFF Dataset](https://sites.google.com/site/iitaffdataset/).
 
 <p align="center">
-<img src="images/pipeline.png" width="640" height="480" />
+<img src="images/pipeline.png" width="1300" height="480" />
 </p>
 
 ## Authors 
