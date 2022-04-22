@@ -110,6 +110,73 @@ def get_image_array(image_input,
     return img
 
 
+def revert_coords(image, width, height, bbox, inter):
+    """ Converts the bounding box coordinates from the input resolution of the model (320 x 320)
+    to the original resolution of the frames.
+
+    :param image: original RGB frame
+    :param width: model's input width
+    :param height: model's input height
+    :param bbox: bounding box coordinates with respect to the model's input resolution
+    :param inter: interpolation
+    :return: bounding box coordinates with respect to the original frame resolution
+    """
+
+    # initialize the dimensions of the image to be resized and
+    # grab the image size
+    (h, w) = image.shape[:2]
+
+    # if both the width and height are None, then return the
+    # original image
+    if width is None and height is None:
+        return image
+
+    # check to see if the width is None
+    # if width is None:
+    # calculate the ratio of the height and construct the
+    # dimensions
+    r = height / float(h)
+    if int(w * r) < width:
+        dim = (int(w * r), height)
+    else:
+        r = width / float(w)
+        dim = (width, int(h * r))
+
+    # Resize the image
+    resized = cv2.resize(image, dim, interpolation=inter)
+    (h2, w2) = resized.shape[:2]
+
+    # Convert the coordinates
+    delta_w = width - w2
+    delta_h = height - h2
+    new_bbox = bbox.copy()
+    res_width, res_height = ((new_bbox[2] - new_bbox[0]), (new_bbox[3] - new_bbox[1]))
+    if delta_h == 0:
+        r2 = w2 / float(w)
+        new_bbox[1] = new_bbox[1] / r
+        new_bbox[0] = new_bbox[0] - (delta_w // 2)
+        if new_bbox[0] < 0: new_bbox[0] = 0
+        new_bbox[0] = new_bbox[0] / r2
+        res_width = res_width / r2
+        res_height = res_height / r
+    elif delta_w == 0:
+        r2 = h2 / float(h)
+        new_bbox[0] = new_bbox[0] / r
+        new_bbox[1] = new_bbox[1] - (delta_h // 2)
+        if new_bbox[1] < 0: new_bbox[1] = 0
+        new_bbox[1] = new_bbox[1] / r2
+        res_width = res_width / r
+        res_height = res_height / r2
+
+    new_bbox[2] = res_width
+    new_bbox[3] = res_height
+    new_bbox[2] = new_bbox[2] + new_bbox[0]
+    new_bbox[3] = new_bbox[3] + new_bbox[1]
+
+    # return the resized bounding box coordinates
+    return new_bbox
+
+
 # TODO: Insert here path to video
 path_to_video = "..."
 cap = cv2.VideoCapture(path_to_video)
@@ -161,7 +228,7 @@ while cap.isOpened():
     # detection_classes should be ints.
     detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
 
-    od_prediction = image_np.copy()
+    od_prediction = image.copy()
     for i, box in enumerate(detections['detection_boxes']):
         if detections['detection_scores'][i] > 0.7:
             # Values inside box array are normalized
@@ -172,8 +239,12 @@ while cap.isOpened():
             bbox = [int(round(box[1] * od_input_width)), int(round(box[0] * od_input_height)),
                     int(round(box[3] * od_input_width)), int(round(box[2] * od_input_height))]
 
+            # Retrieve coordinates with respect to original resolution
+            [xmin, xmax, ymin, ymax] = revert_coords(image, width=320, height=320, bbox=bbox, inter=cv2.INTER_AREA)
+            bbox = [int(xmin), int(xmax), int(ymin), int(ymax)]
+
             # Crop object
-            od_output = od_prediction[bbox[1]:bbox[3], bbox[0]:bbox[2]]
+            od_output = image[bbox[1]:bbox[3], bbox[0]:bbox[2]]
 
             # Draw rectangle
             cv2.rectangle(od_prediction, (int(bbox[0]), int(bbox[1])), (int(bbox[2]), int(bbox[3])), color=(0, 0, 255),
@@ -193,6 +264,7 @@ while cap.isOpened():
             black[aff_prediction == 1, :] = [0, 0, 255]  # blue = grasp
             black[aff_prediction == 2, :] = [0, 255, 0]  # verde = non grasp
             (h, w) = od_output.shape[:2]
+
             if w > h:
                 black = cv2.rotate(black, cv2.ROTATE_90_COUNTERCLOCKWISE)
             cv2.namedWindow("Affordance detection", cv2.WINDOW_NORMAL)
