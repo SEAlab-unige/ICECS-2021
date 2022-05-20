@@ -9,14 +9,6 @@ Both object detector and affordance detector are lightweight models and have bee
 <img src="images/pipeline.png" width="667" height="234" />
 </p>
 
-## Authors 
-* Tommaso Apicella
-* Andrea Cavallaro  
-* Riccardo Berta  
-* Paolo Gastaldo 
-* Francesco Bellotti
-* Edoardo Ragusa
-
 ## Table of contents
 * [Python demo](#python-demo)
 * [Reference](#reference)
